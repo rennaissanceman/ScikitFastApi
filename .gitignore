@@ -1,0 +1,24 @@
+# --- Python / venv ---
+.venv/
+__pycache__/
+*.py[cod]
+
+# --- Testing ---
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- IDE ---
+.idea/
+.vscode/
+
+# --- Logs / env ---
+*.log
+.env
+
+# --- Jupyter (opcjonalnie) ---
+.ipynb_checkpoints/
+
+# --- OS junk ---
+.DS_Store
+Thumbs.db

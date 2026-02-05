@@ -1,15 +1,24 @@
-# ScikitFastApi — Iris Classifier (scikit-learn + FastAPI)
+# ScikitFastApi – Iris Classifier (scikit-learn + FastAPI)
 
-## Cel
-Projekt pokazuje prosty system AI jako usługę:
-- model ML trenowany lokalnie (offline) w notebooku Jupyter
-- zapis modelu do pliku `model/model.joblib`
-- FastAPI ładuje model przy starcie (bez trenowania) i udostępnia endpointy predykcyjne
+## Opis systemu / usługi
+Projekt prezentuje prosty system AI jako usługę webową:
+- model uczenia maszynowego trenowany lokalnie (offline) w notebooku Jupyter,
+- zapis wytrenowanego modelu do pliku `model/model.joblib`,
+- aplikacja FastAPI ładuje model przy starcie (bez trenowania) i udostępnia endpointy predykcyjne.
+
+Rozwiązywany problem: klasyfikacja gatunku kwiatu na podstawie 4 cech Iris.
+
+---
 
 ## Wymagania
 - Python 3.10+
-- uv
+- `uv` – narzędzie do zarządzania środowiskiem i zależnościami
 
-## Instalacja środowiska (uv)
+---
+
+## Przygotowanie środowiska (uv)
+
 ```bash
+uv venv
 uv sync
+```

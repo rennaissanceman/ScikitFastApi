@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field, conlist
 
 class PredictRequest(BaseModel):
     """
-    Dla Iris oczekujemy 4 cech (float), w stałej kolejności:
+    Dla Iris oczekiwanie 4 cech (float), w stałej kolejności:
     [sepal length, sepal width, petal length, petal width]
 
     conlist(...) wymusza:

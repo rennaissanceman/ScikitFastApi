@@ -2,11 +2,7 @@
 main.py
 
 Routing FastAPI + integracja z service.py.
-
-Tu NIE trenujemy modelu.
-Tu tylko:
-- ładujemy model przy starcie (startup)
-- wystawiamy endpointy
+Wystawianie endpointów
 """
 
 from __future__ import annotations
@@ -35,7 +31,7 @@ assets: ModelAssets | None = None
 def startup() -> None:
     """
     Uruchamia się raz przy starcie serwera.
-    Ładujemy model z pliku joblib (wygenerowanego przez notebook).
+    Ładowanie modelu z pliku joblib wygenerowanego przez .ipynb.
     """
     global assets
     assets = load_assets()
@@ -44,7 +40,7 @@ def startup() -> None:
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    """Prosty endpoint sprawdzający czy serwer działa."""
+    """Sprawdzenie dostępności serwera."""
     return {"status": "ok"}
 
 @app.get("/")

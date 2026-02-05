@@ -1,12 +1,11 @@
 """
 service.py
 
-Warstwa "logiki" ML oddzielona od routingu FastAPI.
+Warstwa logiki ML oddzielona od routingu FastAPI.
 
-Dlaczego to jest dobre?
-- main.py jest wtedy czytelny: tylko endpointy i HTTP
-- service.py robi całą "robotę": load model, predict, predict_proba
-- łatwiej testować i rozwijać
+- czytelność main.py --> tylko endpointy i HTTP
+- service.py --> load model, predict, predict_proba
+- lepsze testowanie i rozwijanie.
 """
 
 from __future__ import annotations
@@ -25,7 +24,6 @@ from .settings import MODEL_FILE, METADATA_FILE
 @dataclass
 class ModelAssets:
     """
-    Trzymamy razem to, co ładuje serwer:
     - model: obiekt scikit-learn (np. Pipeline)
     - metadata: słownik z opisem cech/klas, data treningu itd.
     """
@@ -35,11 +33,7 @@ class ModelAssets:
 
 def load_assets() -> ModelAssets:
     """
-    Ładowanie modelu i metadanych z dysku.
-
-    Wymóg zadania:
-    - model jest trenowany offline
-    - serwer tylko ładuje zapisany plik (joblib)
+    Ładowanie modelu i metadanych z dysku (joblib).
     """
     if not MODEL_FILE.exists():
         raise FileNotFoundError(
@@ -71,7 +65,6 @@ def predict_class(assets: ModelAssets, features: list[float]) -> int:
 #     """
 #     Predykcja klasy.
 #     scikit-learn oczekuje 2D: (n_samples, n_features),
-#     więc podajemy [features] jako jedną próbkę.
 #     """
 #     pred = assets.model.predict([features])[0]
 #     return int(pred)
@@ -97,11 +90,6 @@ def predict_proba(assets: ModelAssets, features: list[float]) -> tuple[int, list
 #     """
 #     Predykcja prawdopodobieństw.
 #     Działa tylko, jeśli model ma predict_proba.
-#
-#     Zwracamy:
-#     - prediction: klasa o największym prawdopodobieństwie
-#     - probabilities: lista floatów
-#     """
 #     if not hasattr(assets.model, "predict_proba"):
 #         raise AttributeError("Model does not support predict_proba")
 #

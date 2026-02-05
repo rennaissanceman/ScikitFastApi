@@ -1,8 +1,5 @@
 """
-settings.py
-
-Jedno miejsce na ścieżki i ustawienia aplikacji.
-Dzięki temu nie "rozsypują się" po kodzie i łatwiej je zmienić.
+Wspólne miejsce na ścieżki i ustawienia aplikacji.
 """
 
 from pathlib import Path
@@ -11,11 +8,11 @@ from pathlib import Path
 # app/settings.py -> app -> repo root
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
-# Katalog na artefakty modelu (po treningu)
+# artefakty modelu (po treningu)
 MODEL_DIR = REPO_ROOT / "model"
 
-# Plik modelu zapisany przez notebook (joblib)
+# Plik modelu (joblib)
 MODEL_FILE = MODEL_DIR / "model.joblib"
 
-# Metadane (opcjonalnie)
+# Metadane
 METADATA_FILE = MODEL_DIR / "metadata.json"

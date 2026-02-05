@@ -1,0 +1,16 @@
+{
+  "problem": "iris_classification",
+  "trained_at_utc": "2026-02-04T22:59:55.084975+00:00",
+  "feature_names": [
+    "sepal length (cm)",
+    "sepal width (cm)",
+    "petal length (cm)",
+    "petal width (cm)"
+  ],
+  "class_names": [
+    "setosa",
+    "versicolor",
+    "virginica"
+  ],
+  "n_features": 4
+}

@@ -12,6 +12,8 @@ Dlaczego to jest dobre?
 from __future__ import annotations
 
 import json
+import pandas as pd
+
 from dataclasses import dataclass
 from typing import Any
 
@@ -55,31 +57,56 @@ def load_assets() -> ModelAssets:
 
     return ModelAssets(model=model, metadata=metadata)
 
-
 def predict_class(assets: ModelAssets, features: list[float]) -> int:
-    """
-    Predykcja klasy.
-    scikit-learn oczekuje 2D: (n_samples, n_features),
-    więc podajemy [features] jako jedną próbkę.
-    """
-    pred = assets.model.predict([features])[0]
+    feature_names = assets.metadata.get("feature_names")
+    if feature_names:
+        X = pd.DataFrame([features], columns=feature_names)
+    else:
+        X = [features]
+    pred = assets.model.predict(X)[0]
     return int(pred)
 
 
-def predict_proba(assets: ModelAssets, features: list[float]) -> tuple[int, list[float]]:
-    """
-    Predykcja prawdopodobieństw.
-    Działa tylko, jeśli model ma predict_proba.
+# def predict_class(assets: ModelAssets, features: list[float]) -> int:
+#     """
+#     Predykcja klasy.
+#     scikit-learn oczekuje 2D: (n_samples, n_features),
+#     więc podajemy [features] jako jedną próbkę.
+#     """
+#     pred = assets.model.predict([features])[0]
+#     return int(pred)
 
-    Zwracamy:
-    - prediction: klasa o największym prawdopodobieństwie
-    - probabilities: lista floatów
-    """
+
+def predict_proba(assets: ModelAssets, features: list[float]) -> tuple[int, list[float]]:
     if not hasattr(assets.model, "predict_proba"):
         raise AttributeError("Model does not support predict_proba")
 
-    proba = assets.model.predict_proba([features])[0]
-    # proba to np. array([0.98, 0.01, 0.01])
+    feature_names = assets.metadata.get("feature_names")
+    if feature_names:
+        X = pd.DataFrame([features], columns=feature_names)
+    else:
+        X = [features]
+
+    proba = assets.model.predict_proba(X)[0]
     probs = [float(x) for x in proba]
     pred = int(max(range(len(probs)), key=lambda i: probs[i]))
     return pred, probs
+
+
+# def predict_proba(assets: ModelAssets, features: list[float]) -> tuple[int, list[float]]:
+#     """
+#     Predykcja prawdopodobieństw.
+#     Działa tylko, jeśli model ma predict_proba.
+#
+#     Zwracamy:
+#     - prediction: klasa o największym prawdopodobieństwie
+#     - probabilities: lista floatów
+#     """
+#     if not hasattr(assets.model, "predict_proba"):
+#         raise AttributeError("Model does not support predict_proba")
+#
+#     proba = assets.model.predict_proba([features])[0]
+#     # proba to np. array([0.98, 0.01, 0.01])
+#     probs = [float(x) for x in proba]
+#     pred = int(max(range(len(probs)), key=lambda i: probs[i]))
+#     return pred, probs

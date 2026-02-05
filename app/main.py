@@ -47,6 +47,15 @@ def health() -> dict[str, str]:
     """Prosty endpoint sprawdzający czy serwer działa."""
     return {"status": "ok"}
 
+@app.get("/")
+def root():
+    return {
+        "message": "ScikitFastApi is running. Go to /docs for Swagger UI.",
+        "docs": "/docs",
+        "health": "/health",
+        "predict": "/v1/predict",
+    }
+
 
 @app.get("/v1/model-info")
 def model_info() -> dict[str, Any]:
